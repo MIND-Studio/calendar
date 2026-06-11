@@ -10,6 +10,7 @@ import {
   type CalendarEvent,
   type NewEvent,
 } from "@/lib/solid/events";
+import { isBrokered, signalReady } from "@/lib/solid/broker";
 import {
   monthGrid,
   monthLabel,
@@ -45,6 +46,11 @@ export default function CalendarView({ webId }: { webId: string }) {
           setEvents([]);
           setError(`Could not load events from your pod: ${String(e)}`);
         }
+      })
+      .finally(() => {
+        // Tell the shell we've rendered so it drops its loading overlay
+        // (no-op when standalone).
+        if (!cancelled && isBrokered()) signalReady();
       });
     return () => {
       cancelled = true;

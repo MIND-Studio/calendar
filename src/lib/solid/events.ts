@@ -15,6 +15,7 @@ import {
   FetchError,
 } from "@inrupt/solid-client";
 import { session } from "./session";
+import { isBrokered, brokerFetch, brokeredIdentity } from "./broker";
 import { calendarRootFor, podRootFromWebId } from "@/lib/config";
 
 /**
@@ -53,8 +54,14 @@ export type CalendarEvent = {
   description?: string;
 };
 
+/**
+ * The fetch every pod call runs through. When Calendar is hosted in the Mind
+ * shell (brokered mode) this is the shell's scope-checked broker fetch —
+ * Calendar holds no session of its own; otherwise it's the local OIDC
+ * session's authed fetch.
+ */
 function authedFetch(): typeof fetch {
-  return session().fetch as typeof fetch;
+  return isBrokered() ? brokerFetch : (session().fetch as typeof fetch);
 }
 
 /**
@@ -67,9 +74,14 @@ function noCacheFetch(): typeof fetch {
     inner(url, { ...init, cache: "no-store" })) as typeof fetch;
 }
 
-/** `{podRoot}apps/calendar/` for the signed-in WebID. */
+/**
+ * `{podRoot}apps/calendar/` for the signed-in WebID. Inside the Mind shell the
+ * brokered workspace pod root wins (the workspace pod isn't derivable from the
+ * WebID); standalone it's derived from the WebID as before.
+ */
 export function calendarRoot(webId: string): string {
-  return calendarRootFor(podRootFromWebId(webId));
+  const podRoot = brokeredIdentity()?.podRoot ?? podRootFromWebId(webId);
+  return calendarRootFor(podRoot);
 }
 
 function isNotFound(e: unknown): boolean {
