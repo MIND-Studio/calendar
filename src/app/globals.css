@@ -20,6 +20,6 @@ html,
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--mind-font-sans);
+  font-family: var(--font-hanken, var(--mind-font-sans));
   min-height: 100vh;
 }
