@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -12,6 +11,7 @@ import {
   Spinner,
 } from "@mind-studio/ui";
 import { CalendarClock, MapPin, Trash2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import type { CalendarEvent } from "@/lib/solid/events";
 
 /**
@@ -53,8 +53,7 @@ export default function EventDetailDialog({
     }
   }
 
-  const sameDay =
-    event && event.start.toDateString() === event.end.toDateString();
+  const sameDay = event && event.start.toDateString() === event.end.toDateString();
 
   return (
     <Dialog open={event !== null} onOpenChange={(open) => !open && onClose()}>
@@ -94,9 +93,7 @@ export default function EventDetailDialog({
                 {event.description}
               </p>
             )}
-            <p className="break-all font-mono text-[10px] text-muted-foreground">
-              {event.url}
-            </p>
+            <p className="break-all font-mono text-[10px] text-muted-foreground">{event.url}</p>
 
             {error && (
               <p className="rounded-md border border-destructive/50 bg-destructive/10 px-3 py-2 text-sm text-destructive">
@@ -114,11 +111,7 @@ export default function EventDetailDialog({
                   >
                     Keep it
                   </Button>
-                  <Button
-                    variant="destructive"
-                    onClick={reallyDelete}
-                    disabled={deleting}
-                  >
+                  <Button variant="destructive" onClick={reallyDelete} disabled={deleting}>
                     {deleting && <Spinner className="size-4" />}
                     {deleting ? "Deleting…" : "Yes, delete"}
                   </Button>
@@ -128,10 +121,7 @@ export default function EventDetailDialog({
                   <Button variant="outline" onClick={onClose}>
                     Close
                   </Button>
-                  <Button
-                    variant="destructive"
-                    onClick={() => setConfirming(true)}
-                  >
+                  <Button variant="destructive" onClick={() => setConfirming(true)}>
                     <Trash2 className="size-4" />
                     Delete
                   </Button>

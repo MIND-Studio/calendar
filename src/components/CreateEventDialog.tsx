@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -11,11 +10,12 @@ import {
   DialogTitle,
   Input,
   Label,
-  Textarea,
   Spinner,
+  Textarea,
 } from "@mind-studio/ui";
-import type { NewEvent } from "@/lib/solid/events";
+import { useEffect, useState } from "react";
 import { toDateInputValue } from "@/lib/dates";
+import type { NewEvent } from "@/lib/solid/events";
 
 /**
  * Create-event dialog, opened by clicking a day. The clicked date prefills
@@ -97,9 +97,7 @@ export default function CreateEventDialog({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>New event</DialogTitle>
-          <DialogDescription>
-            Saved as a Turtle resource in your pod.
-          </DialogDescription>
+          <DialogDescription>Saved as a Turtle resource in your pod.</DialogDescription>
         </DialogHeader>
         <form onSubmit={onSubmit} className="space-y-4">
           <div className="space-y-1.5">
@@ -166,12 +164,7 @@ export default function CreateEventDialog({
             </p>
           )}
           <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={onClose}
-              disabled={saving}
-            >
+            <Button type="button" variant="outline" onClick={onClose} disabled={saving}>
               Cancel
             </Button>
             <Button type="submit" disabled={saving}>
