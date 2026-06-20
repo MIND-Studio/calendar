@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
 import { Button } from "@mind-studio/ui";
-import { ensureSession, rememberSignedOutPath } from "@/lib/solid/auth";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import CalendarView from "@/components/CalendarView";
+import { ensureSession, rememberSignedOutPath } from "@/lib/solid/auth";
 
 /**
  * Main surface. Signed out → a quiet prompt (the deep link is remembered so
@@ -12,9 +12,7 @@ import CalendarView from "@/components/CalendarView";
  */
 export default function CalendarPage() {
   const [state, setState] = useState<
-    | { kind: "loading" }
-    | { kind: "signed-out" }
-    | { kind: "ready"; webId: string }
+    { kind: "loading" } | { kind: "signed-out" } | { kind: "ready"; webId: string }
   >({ kind: "loading" });
 
   useEffect(() => {

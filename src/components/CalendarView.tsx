@@ -1,26 +1,19 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
 import { Button, Skeleton } from "@mind-studio/ui";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import {
-  listEvents,
-  createEvent,
-  deleteEvent,
-  type CalendarEvent,
-  type NewEvent,
-} from "@/lib/solid/events";
-import { isBrokered, signalReady } from "@/lib/solid/broker";
-import {
-  monthGrid,
-  monthLabel,
-  dayKey,
-  pillTime,
-  WEEKDAYS,
-  type GridCell,
-} from "@/lib/dates";
+import { useEffect, useMemo, useState } from "react";
 import CreateEventDialog from "@/components/CreateEventDialog";
 import EventDetailDialog from "@/components/EventDetailDialog";
+import { dayKey, type GridCell, monthGrid, monthLabel, pillTime, WEEKDAYS } from "@/lib/dates";
+import { isBrokered, signalReady } from "@/lib/solid/broker";
+import {
+  type CalendarEvent,
+  createEvent,
+  deleteEvent,
+  listEvents,
+  type NewEvent,
+} from "@/lib/solid/events";
 
 /**
  * The month grid. Loads ALL events once from the pod and filters client-side
@@ -97,9 +90,7 @@ export default function CalendarView({ webId }: { webId: string }) {
   return (
     <section className="mx-auto max-w-6xl px-4 py-6 sm:px-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold tracking-tight">
-          {monthLabel(year, month)}
-        </h1>
+        <h1 className="text-2xl font-semibold tracking-tight">{monthLabel(year, month)}</h1>
         <div className="flex items-center gap-1">
           <Button
             variant="outline"
@@ -126,10 +117,7 @@ export default function CalendarView({ webId }: { webId: string }) {
       {error && (
         <div className="mt-4 rounded-md border border-destructive/50 bg-destructive/10 px-3 py-2 text-sm text-destructive">
           {error}
-          <button
-            className="ml-3 underline underline-offset-2"
-            onClick={() => setError(null)}
-          >
+          <button className="ml-3 underline underline-offset-2" onClick={() => setError(null)}>
             Dismiss
           </button>
         </div>
@@ -168,16 +156,8 @@ export default function CalendarView({ webId }: { webId: string }) {
         <span className="font-mono">apps/calendar/</span>.
       </p>
 
-      <CreateEventDialog
-        date={createFor}
-        onClose={() => setCreateFor(null)}
-        onCreate={onCreate}
-      />
-      <EventDetailDialog
-        event={detail}
-        onClose={() => setDetail(null)}
-        onDelete={onDelete}
-      />
+      <CreateEventDialog date={createFor} onClose={() => setCreateFor(null)} onCreate={onCreate} />
+      <EventDetailDialog event={detail} onClose={() => setDetail(null)} onDelete={onDelete} />
     </section>
   );
 }
@@ -214,9 +194,7 @@ function DayCell({
     >
       <span
         className={`inline-flex size-6 items-center justify-center rounded-full text-xs ${
-          cell.isToday
-            ? "bg-primary font-semibold text-primary-foreground"
-            : ""
+          cell.isToday ? "bg-primary font-semibold text-primary-foreground" : ""
         }`}
       >
         {cell.date.getDate()}
@@ -236,9 +214,7 @@ function DayCell({
           </button>
         ))}
         {overflow > 0 && (
-          <p className="px-1.5 text-[10px] text-muted-foreground">
-            +{overflow} more
-          </p>
+          <p className="px-1.5 text-[10px] text-muted-foreground">+{overflow} more</p>
         )}
       </div>
     </div>

@@ -5,18 +5,18 @@ import {
   createSolidDataset,
   createThing,
   deleteSolidDataset,
+  FetchError,
   getContainedResourceUrlAll,
   getDatetime,
   getSolidDataset,
   getStringNoLocale,
   getThingAll,
-  setThing,
   saveSolidDatasetAt,
-  FetchError,
+  setThing,
 } from "@inrupt/solid-client";
-import { session } from "./session";
-import { isBrokered, brokerFetch, brokeredIdentity } from "./broker";
 import { calendarRootFor, podRootFromWebId } from "@/lib/config";
+import { brokeredIdentity, brokerFetch, isBrokered } from "./broker";
+import { session } from "./session";
 
 /**
  * Pod data layer for Mind Calendar. One Turtle resource per event at
@@ -110,9 +110,7 @@ export async function listEvents(webId: string): Promise<CalendarEvent[]> {
         const ds = await getSolidDataset(url, { fetch: noCacheFetch() });
         // Find the thing carrying schema:startDate — robust whether the
         // fragment is #event or something else a sibling app wrote.
-        const thing =
-          getThingAll(ds).find((t) => getDatetime(t, SCHEMA.startDate)) ??
-          null;
+        const thing = getThingAll(ds).find((t) => getDatetime(t, SCHEMA.startDate)) ?? null;
         if (!thing) return null;
         const start = getDatetime(thing, SCHEMA.startDate);
         const end = getDatetime(thing, SCHEMA.endDate);
@@ -124,13 +122,12 @@ export async function listEvents(webId: string): Promise<CalendarEvent[]> {
           start,
           end: end ?? start,
           location: getStringNoLocale(thing, SCHEMA.location) ?? undefined,
-          description:
-            getStringNoLocale(thing, SCHEMA.description) ?? undefined,
+          description: getStringNoLocale(thing, SCHEMA.description) ?? undefined,
         };
       } catch {
         return null;
       }
-    })
+    }),
   );
   return events
     .filter((e): e is CalendarEvent => e !== null)
@@ -150,10 +147,7 @@ export type NewEvent = {
  * lazily on first write (CSS creates intermediate containers on PUT, so a
  * plain save suffices — no separate mkdir round-trip needed).
  */
-export async function createEvent(
-  webId: string,
-  ev: NewEvent
-): Promise<CalendarEvent> {
+export async function createEvent(webId: string, ev: NewEvent): Promise<CalendarEvent> {
   const container = calendarRoot(webId);
   const id =
     typeof crypto !== "undefined" && "randomUUID" in crypto
@@ -167,8 +161,7 @@ export async function createEvent(
     .addDatetime(SCHEMA.startDate, ev.start)
     .addDatetime(SCHEMA.endDate, ev.end);
   if (ev.location) thing = thing.addStringNoLocale(SCHEMA.location, ev.location);
-  if (ev.description)
-    thing = thing.addStringNoLocale(SCHEMA.description, ev.description);
+  if (ev.description) thing = thing.addStringNoLocale(SCHEMA.description, ev.description);
 
   const ds = setThing(createSolidDataset(), thing.build());
   await saveSolidDatasetAt(url, ds, { fetch: authedFetch() });

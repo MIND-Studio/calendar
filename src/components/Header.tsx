@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Button } from "@mind-studio/ui";
 import { LogOut } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
 import { ensureSession } from "@/lib/solid/auth";
 import { session } from "@/lib/solid/session";
@@ -43,9 +43,7 @@ export default function Header() {
     <header className="border-b bg-card">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-8">
         <Link href="/" className="flex items-baseline gap-3">
-          <span className="text-xl font-semibold tracking-tight">
-            Mind Calendar
-          </span>
+          <span className="text-xl font-semibold tracking-tight">Mind Calendar</span>
           <span className="hidden text-[10px] uppercase tracking-[0.22em] text-muted-foreground sm:inline">
             <span className="text-primary">●</span> your time, in your pod
           </span>

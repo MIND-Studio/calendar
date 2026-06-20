@@ -2,8 +2,7 @@
  * Single source of truth for pod URLs. Every Solid call in this prototype
  * flows through here, so flipping to a different CSS instance is one env var.
  */
-export const POD_BASE_URL =
-  process.env.NEXT_PUBLIC_POD_BASE_URL ?? "http://localhost:3011/";
+export const POD_BASE_URL = process.env.NEXT_PUBLIC_POD_BASE_URL ?? "http://localhost:3011/";
 
 /**
  * The container mind-calendar claims under each user's pod. One Turtle
