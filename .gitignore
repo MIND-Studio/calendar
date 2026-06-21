@@ -7,6 +7,11 @@ out/
 .playwright-mcp/
 *.log
 *.png
+# Canonical brand icons are generated from @mind-studio/ui/brand (npm run gen:icons)
+# and committed so the favicon/PWA/apple-touch assets ship with the app.
+!src/app/apple-icon.png
+!public/icon-192.png
+!public/icon-512.png
 .env
 .env*.local
 .DS_Store

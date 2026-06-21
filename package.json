@@ -10,6 +10,7 @@
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
+    "gen:icons": "node scripts/gen-icons.mjs",
     "test": "vitest run --passWithNoTests",
     "prepare": "husky"
   },
@@ -21,7 +22,7 @@
     "@inrupt/solid-client-authn-browser": "^4.0.0",
     "@inrupt/solid-client-authn-node": "^3.1.0",
     "@mind-studio/core": "^0.7.0",
-    "@mind-studio/ui": "^0.4.0",
+    "@mind-studio/ui": "^0.7.0",
     "lucide-react": "^0.460.0",
     "next": "16.2.6",
     "react": "19.2.4",
@@ -36,6 +37,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "tsx": "^4.22.3",
     "typescript": "^5"
