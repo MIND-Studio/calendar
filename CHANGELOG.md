@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/MIND-Studio/calendar/compare/v0.2.0...v0.3.0) (2026-06-21)
+
+
+### Features
+
+* adopt brand lockup + canonical icons (ui[#29](https://github.com/MIND-Studio/calendar/issues/29) wave 2) ([#5](https://github.com/MIND-Studio/calendar/issues/5)) ([72c07e8](https://github.com/MIND-Studio/calendar/commit/72c07e84e9b1cf125d3ef2d382de12742c45719a))
+
 ## [0.2.0](https://github.com/MIND-Studio/calendar/compare/v0.1.0...v0.2.0) (2026-06-20)
 
 
